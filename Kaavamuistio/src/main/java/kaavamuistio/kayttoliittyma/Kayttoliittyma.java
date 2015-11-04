@@ -1,4 +1,4 @@
-package javalab.kaavamuistio;
+package kaavamuistio.kayttoliittyma;
 
 import java.awt.Container;
 import java.awt.Dimension;

@@ -1,5 +1,6 @@
-package javalab.kaavamuistio;
+package kaavamuistio;
 
+import kaavamuistio.kayttoliittyma.Kayttoliittyma;
 import javax.swing.SwingUtilities;
 
 public class Main {
