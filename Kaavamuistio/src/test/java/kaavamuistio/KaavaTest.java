@@ -27,7 +27,7 @@ public class KaavaTest {
         alkukaava = "_a_*5+87/_a_*_b_";
         virhekaava = "_c_*5+87/_a_*_b";
         tavoitekaava = "_c_*5+87/_a_*_b_";
-        kaava = new Kaava(alkukaava);
+        kaava = new Kaava("Kokeilukaava", alkukaava);
     }
 
     @Test

@@ -4,14 +4,20 @@ import java.util.ArrayList;
 
 class Kaava {
     private String kaava;
+    private String nimi;
     
-    public Kaava(String kaava) {
+    public Kaava(String nimi, String kaava) {
         this.kaava = kaava;
+        this.nimi = nimi;
         tarkistaKaavanEheys();
     }
     
     public String getKaava() {
         return kaava;
+    }
+    
+    public String getNimi() {
+        return nimi;
     }
     
     /**
@@ -22,6 +28,16 @@ class Kaava {
     public void muutaKaavaa(String kaava) {
         this.kaava = kaava;
         tarkistaKaavanEheys();
+    }
+    
+    
+    /**
+    * Metodi muuttaa kaavaa
+    * 
+    * @param nimi Uusi Nimi
+    */
+    public void muutaNimi(String nimi) {
+        this.nimi = nimi;
     }
     
     /**
@@ -76,5 +92,10 @@ class Kaava {
     */
     public String laske() {
         return "";
+    }
+    
+    @Override
+    public String toString() {
+        return nimi+": "+kaava;
     }
 }
