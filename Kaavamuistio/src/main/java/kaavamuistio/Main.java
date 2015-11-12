@@ -6,9 +6,9 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) {
-        // Luodaan käyttöliittymä ja avataan se
+        Kaavamuistio kaavamuistio = new Kaavamuistio();
         
-        Kayttoliittyma kayttoliittyma = new Kayttoliittyma();
+        Kayttoliittyma kayttoliittyma = new Kayttoliittyma(kaavamuistio);
         SwingUtilities.invokeLater(kayttoliittyma);
     }
     

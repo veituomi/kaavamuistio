@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kaavamuistio;
 
 import java.util.ArrayList;
@@ -13,10 +8,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Veini
- */
 public class KaavaTest {
     
     private String alkukaava, virhekaava, tavoitekaava;
@@ -61,5 +52,4 @@ public class KaavaTest {
         parametrit.add("74");
         assertEquals(alkukaava.replaceAll("_a_", "23").replaceAll("_b_", "74"),kaava.sijoitaParametrit(parametrit));
     }
-    
 }

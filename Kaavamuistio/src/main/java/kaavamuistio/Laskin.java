@@ -6,8 +6,8 @@ import javax.script.ScriptEngineManager;
 public class Laskin {
     // Lähtökohtaisesti käytetään JavaScript-moottoria laskemiseen.
     // Mahdollisuuksien puitteissa tavoitteena on kirjoittaa oma ratkaisija.
-    private ScriptEngineManager scriptEngineManager;
-    private ScriptEngine scriptEngine;
+    private static ScriptEngineManager scriptEngineManager;
+    private static ScriptEngine scriptEngine;
     
     public Laskin() {
         scriptEngineManager = new ScriptEngineManager();
@@ -21,7 +21,7 @@ public class Laskin {
     * 
     * @return arvo tai ilmoitus virheestä
     */
-    public String laske(String lauseke) {
+    public static String laske(String lauseke) {
         try {
             return scriptEngine.eval(lauseke).toString();
         }

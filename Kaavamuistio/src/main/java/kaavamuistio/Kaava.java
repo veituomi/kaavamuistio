@@ -5,6 +5,7 @@ import java.util.ArrayList;
 class Kaava {
     private String kaava;
     private String nimi;
+    private Laskentahistoria laskentahistoria;
     
     public Kaava(String nimi, String kaava) {
         this.kaava = kaava;
@@ -18,6 +19,17 @@ class Kaava {
     
     public String getNimi() {
         return nimi;
+    }
+    
+    public Laskentahistoria getLaskentahistoria() {
+        if (laskentahistoria == null) {
+            return new Laskentahistoria();
+        }
+        return laskentahistoria;
+    }
+    
+    public void setLaskentahistoria(Laskentahistoria lh) {
+        laskentahistoria = lh;
     }
     
     /**
@@ -88,10 +100,15 @@ class Kaava {
     /**
     * Metodi laskee lausekkeen arvon
     * 
-    * @return lauseke johon on sijoitettu parametrit
+    * @return lukuarvo, joka vastaa lauseketta
     */
-    public String laske() {
-        return "";
+    public String laske(ArrayList<String> parametrit) {
+        String tulos = Laskin.laske(sijoitaParametrit(parametrit));
+        if (laskentahistoria == null) {
+            laskentahistoria = new Laskentahistoria();
+        }
+        laskentahistoria.lisaaRivi(parametrit, tulos);
+        return tulos;
     }
     
     @Override

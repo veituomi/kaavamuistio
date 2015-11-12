@@ -4,12 +4,16 @@ import java.awt.Container;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import kaavamuistio.Kaavamuistio;
 
 public class Kayttoliittyma implements Runnable {
 
     private JFrame frame;
+    
+    private Kaavamuistio kaavamuistio;
 
-    public Kayttoliittyma() {
+    public Kayttoliittyma(Kaavamuistio km) {
+        kaavamuistio = km;
     }
 
     @Override

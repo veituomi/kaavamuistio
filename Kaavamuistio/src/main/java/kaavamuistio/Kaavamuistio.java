@@ -76,6 +76,32 @@ public class Kaavamuistio {
     }
     
     /**
+    * Metodi lisää kaavan muistioon
+    * Tätä käytetään lähinnä muistiota levyltä ladatessa
+    *
+    * @param   kaava
+    */
+    public void lisaaKaava(Kaava kaava) {
+        kaavat.add(kaava);
+    }
+    
+    /**
+    * Metodi lisää kaavan muistioon
+    *
+    * @param   nimi Kaavan nimi
+    * 
+    * @return true/false onnistumisesta riippuen
+    */
+    public boolean poistaKaava(String nimi) {
+        int i = kaavanIndeksi(nimi);
+        if (i == -1) {
+            kaavat.remove(i);
+            return true;
+        }
+        return false;
+    }
+    
+    /**
     * Metodi muuttaa muistiossa olevaa kaavaa
     *
     * @param   nimi Kaavan nimi
