@@ -1,7 +1,10 @@
-package kaavamuistio;
+package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
 
+/**
+ * Luokka pitää historiaa kaavalla tehdyistä laskuista
+ */
 public class Laskentahistoria {
     private ArrayList<String> laskut;
     private int kokorajoite;
@@ -9,6 +12,11 @@ public class Laskentahistoria {
     public Laskentahistoria() {
         laskut = new ArrayList<>();
         kokorajoite = 1000;
+    }
+    
+    public Laskentahistoria(int kokorajoite) {
+        laskut = new ArrayList<>();
+        this.kokorajoite = kokorajoite;
     }
     
     /**
@@ -19,10 +27,7 @@ public class Laskentahistoria {
     * 
     */
     public void lisaaRivi(ArrayList<String> parametrit, String tulos) {
-        laskut.add(parametrit.toString()+": "+tulos);
-        while (laskut.size() > kokorajoite) {
-            laskut.remove(0);
-        }
+        lisaaRivi(parametrit.toString()+": "+tulos);
     }
     
     /**
@@ -33,6 +38,9 @@ public class Laskentahistoria {
     */
     public void lisaaRivi(String rivi) {
         laskut.add(rivi);
+        while (laskut.size() > kokorajoite) {
+            laskut.remove(0);
+        }
     }
     
     /**

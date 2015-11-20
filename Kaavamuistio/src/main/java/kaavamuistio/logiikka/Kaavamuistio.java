@@ -1,7 +1,11 @@
-package kaavamuistio;
+package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
+import kaavamuistio.palvelut.Laskin;
 
+/**
+ * Luokka tarjoaa tavan hallita listaa kaavoista helposti
+ */
 public class Kaavamuistio {
     private ArrayList<Kaava> kaavat;
     private Laskin laskin;
@@ -30,6 +34,22 @@ public class Kaavamuistio {
     }
     
     /**
+    * Metodi hakee kaavat
+    *
+    * @param   haku Pitää sisältyä nimeen
+    * 
+    * @return Palauttaa listan indekseistä, joihin haku osuu
+    */
+    public ArrayList<String> kaavojenNimet(String haku) {
+        ArrayList<String> lista = new ArrayList<>();
+        for (Kaava kaava : kaavat) {
+            if (kaava.getNimi().toLowerCase().contains(haku.toLowerCase()))
+                lista.add(kaava.getNimi());
+        }
+        return lista;
+    }
+    
+    /**
     * Metodi hakee kaavan
     *
     * @param   indeksi Kaavan indeksi muistiossa
@@ -39,7 +59,7 @@ public class Kaavamuistio {
     public Kaava haeKaava(int indeksi) {
         if (indeksi > -1 && indeksi < kaavat.size())
             return kaavat.get(indeksi);
-        return new Kaava("Ei kaavaa", "E=mc^2");
+        return null;
     }
     
     /**
@@ -52,7 +72,7 @@ public class Kaavamuistio {
     public int kaavanIndeksi(String nimi) {
         int i = 0;
         for (Kaava k : kaavat) {
-            if (k.getNimi() == nimi)
+            if (k.getNimi().toLowerCase().equals(nimi.toLowerCase()))
                 return i;
             ++i;
         }
@@ -94,7 +114,7 @@ public class Kaavamuistio {
     */
     public boolean poistaKaava(String nimi) {
         int i = kaavanIndeksi(nimi);
-        if (i == -1) {
+        if (i != -1) {
             kaavat.remove(i);
             return true;
         }

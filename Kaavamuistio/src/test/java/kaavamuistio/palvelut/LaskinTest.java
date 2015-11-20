@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package kaavamuistio;
+package kaavamuistio.palvelut;
 
-import kaavamuistio.Laskin;
+import kaavamuistio.palvelut.Laskin;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

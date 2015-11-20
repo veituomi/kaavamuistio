@@ -1,16 +1,11 @@
-package kaavamuistio;
+package kaavamuistio.logiikka;
 
-import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class KaavamuistioTest {
     
-    private Kaavamuistio kaavamuistio;
+    private final Kaavamuistio kaavamuistio;
     
     public KaavamuistioTest() {
         kaavamuistio = new Kaavamuistio();
@@ -24,10 +19,19 @@ public class KaavamuistioTest {
         assertEquals("[0, 1]", kaavamuistio.kaavojenIndeksit("energia").toString());
         assertEquals("[2]", kaavamuistio.kaavojenIndeksit("nopeus").toString());
     }
+    
+    @Test
+    public void testKaavojenNimet() {
+        assertEquals("[Energian suhde massaan ja valonnopeuteen, Potentiaalienergia]",
+                kaavamuistio.kaavojenNimet("energia").toString());
+        assertEquals("[Nopeus matkan ja ajan suhteenajan]", kaavamuistio.kaavojenNimet("nopeus").toString());
+    }
 
     @Test
     public void testHaeKaava() {
         assertEquals("Potentiaalienergia: _m__c_^2", kaavamuistio.haeKaava(1).toString());
+        assertEquals(null, kaavamuistio.haeKaava(-1));
+        assertEquals(null, kaavamuistio.haeKaava(3));
     }
 
     @Test
@@ -37,9 +41,24 @@ public class KaavamuistioTest {
 
     @Test
     public void testLisaaKaava() {
-        kaavamuistio.lisaaKaava("a", "_b_*_c_");
+        boolean a = kaavamuistio.lisaaKaava("a", "_b_*_c_");
+        boolean b = kaavamuistio.lisaaKaava("a", "jotain");
+        
+        assertEquals(true, a && !b);
+        
         assertEquals("[0, 1, 2, 3]", kaavamuistio.kaavojenIndeksit("").toString());
         assertEquals("a: _b_*_c_", kaavamuistio.haeKaava(3).toString());
+    }
+
+    @Test
+    public void testPoistaKaava() {
+        kaavamuistio.lisaaKaava("a", "_b_*_c_");
+        boolean a = kaavamuistio.poistaKaava("a");
+        boolean b = kaavamuistio.poistaKaava("a");
+        
+        assertEquals(true, a && !b);
+        
+        assertEquals("[0, 1, 2]", kaavamuistio.kaavojenIndeksit("").toString());
     }
 
     @Test
@@ -53,9 +72,10 @@ public class KaavamuistioTest {
     @Test
     public void testMuutaKaavanNimi() {
         kaavamuistio.lisaaKaava("a", "_b_*_c_");
-        boolean onnistuiko = kaavamuistio.muutaKaavanNimi("a", "g");
+        boolean a = kaavamuistio.muutaKaavanNimi("a", "g");
+        boolean b = kaavamuistio.muutaKaavanNimi("et", "qs");
         assertEquals("g: _b_*_c_", kaavamuistio.haeKaava(3).toString());
-        assertEquals(true, onnistuiko);
+        assertEquals(true, a && !b);
     }
     
 }

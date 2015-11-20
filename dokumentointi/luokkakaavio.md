@@ -1,5 +1,3 @@
-[Main]1-1[Kayttoliittyma]
-[Main]1-1[Kaavamuistio]
 [Kayttoliittyma]1-1[Kaavamuistio]
 [Kaava]-.->[Laskin]
 [Kaavamuistio]1-*[Kaava]

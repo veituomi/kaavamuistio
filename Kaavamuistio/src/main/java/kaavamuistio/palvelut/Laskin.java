@@ -1,8 +1,11 @@
-package kaavamuistio;
+package kaavamuistio.palvelut;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+/**
+ * Luokka tarjoaa menetelmän lausekkeen laskuun
+ */
 public class Laskin {
     // Lähtökohtaisesti käytetään JavaScript-moottoria laskemiseen.
     // Mahdollisuuksien puitteissa tavoitteena on kirjoittaa oma ratkaisija.

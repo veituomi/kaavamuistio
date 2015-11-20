@@ -1,5 +1,6 @@
-package kaavamuistio;
+package kaavamuistio.logiikka;
 
+import kaavamuistio.logiikka.Kaava;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -24,6 +25,8 @@ public class KaavaTest {
     @Test
     public void konstruktoriAsettaaKaavanOikein() {
         assertEquals(alkukaava,kaava.getKaava());
+        kaava = new Kaava("Kokeilu", virhekaava);
+        assertEquals(kaava.getKaava(),tavoitekaava);
     }
 
     @Test
@@ -51,5 +54,7 @@ public class KaavaTest {
         parametrit.add("23");
         parametrit.add("74");
         assertEquals(alkukaava.replaceAll("_a_", "23").replaceAll("_b_", "74"),kaava.sijoitaParametrit(parametrit));
+        
+        assertEquals("Virhe", kaava.sijoitaParametrit(new ArrayList<String>()));
     }
 }

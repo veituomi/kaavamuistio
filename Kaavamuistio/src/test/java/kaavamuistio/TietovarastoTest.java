@@ -1,5 +1,8 @@
 package kaavamuistio;
 
+import kaavamuistio.logiikka.Kaavamuistio;
+import kaavamuistio.logiikka.Laskentahistoria;
+import kaavamuistio.logiikka.Kaava;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -25,7 +28,7 @@ public class TietovarastoTest {
         kaavamuistio = Tietovarasto.avaaKaavamuistio("tallennettuKaavamuistio");
         
         assertEquals("Nelio",kaavamuistio.haeKaava(0).getNimi());
-        assertEquals(vertailuhistoria+"\n",kaavamuistio.haeKaava(2).getLaskentahistoria().kaikkiRivit());
+        assertEquals(vertailuhistoria,kaavamuistio.haeKaava(2).getLaskentahistoria().kaikkiRivit());
         assertEquals("_x_*_x_*_x_",kaavamuistio.haeKaava(1).getKaava());
     }
     

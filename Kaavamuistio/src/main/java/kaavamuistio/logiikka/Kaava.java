@@ -1,8 +1,12 @@
-package kaavamuistio;
+package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
+import kaavamuistio.palvelut.Laskin;
 
-class Kaava {
+/**
+ * Luokka tarjoaa tavan käsitellä kaavoja
+ */
+public class Kaava {
     private String kaava;
     private String nimi;
     private Laskentahistoria laskentahistoria;

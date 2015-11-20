@@ -6,9 +6,7 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) {
-        Kaavamuistio kaavamuistio = new Kaavamuistio();
-        
-        Kayttoliittyma kayttoliittyma = new Kayttoliittyma(kaavamuistio);
+        Kayttoliittyma kayttoliittyma = new Kayttoliittyma();
         SwingUtilities.invokeLater(kayttoliittyma);
     }
     
