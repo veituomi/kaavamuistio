@@ -6,7 +6,7 @@ Luodaan ohjelma, johon voi lisätä omia kaavoja tekstimuodossa. Lisäämisen j�
 **Käyttäjän toiminnot:**
 * uuden kaavan lisääminen
 * kaavojen muokkaaminen
-  * kaavojen nimeäminen ja kuvauksen luominen
+  * kaavojen nimeäminen
 * kaavan käyttäminen halutuilla parametreilla
+* kaavan laskuhistorian näyttäminen
 * kaavan poistaminen
-* tallennetun tiedon salaaminen

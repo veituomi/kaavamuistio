@@ -48,7 +48,7 @@ public class Kaava {
     
     
     /**
-    * Metodi muuttaa kaavaa
+    * Metodi muuttaa kaavan nimen
     * 
     * @param nimi Uusi Nimi
     */
@@ -58,7 +58,6 @@ public class Kaava {
     
     /**
     * Metodi tarkistaa ja mahdollisesti korjaa vioittuneen kaavan.
-    * Tälle voi löytyä vielä parempaakin käyttöä. :D
     */
     public void tarkistaKaavanEheys() {
         String[] osiinJaettuKaava = (" "+kaava+" ").split("_");
@@ -103,6 +102,8 @@ public class Kaava {
     
     /**
     * Metodi laskee lausekkeen arvon
+    * 
+    * @param parametrit lausekkeeseen syötettävät parametrit
     * 
     * @return lukuarvo, joka vastaa lauseketta
     */

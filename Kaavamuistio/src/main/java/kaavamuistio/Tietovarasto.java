@@ -29,7 +29,7 @@ public class Tietovarasto {
     
     private static void lisaaKaavat(Kaavamuistio kaavamuistio, String hakemistonNimi) {
         try {
-            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"\\listaus.txt"), "UTF-8");
+            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/listaus.txt"), "UTF-8");
             while (lukija.hasNextLine()) {
                 String kaavanTunniste = lukija.nextLine();
                 Kaava kaava = lueKaava(hakemistonNimi, kaavanTunniste);
@@ -44,7 +44,7 @@ public class Tietovarasto {
     
     private static Kaava lueKaava(String hakemistonNimi, String kaavanTunniste) {
         try {
-            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"\\"+kaavanTunniste+"\\kaava.txt"), "UTF-8");
+            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/"+kaavanTunniste+"/kaava.txt"), "UTF-8");
             String nimi = "", lauseke = "";
             if (lukija.hasNextLine()) {
                 nimi = lukija.nextLine();
@@ -58,7 +58,7 @@ public class Tietovarasto {
     
     private static Laskentahistoria lueLaskentahistoria(String hakemistonNimi, String kaavanTunniste) {
         try {
-            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"\\"+kaavanTunniste+"\\historia.txt"), "UTF-8");
+            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt"), "UTF-8");
             Laskentahistoria laskentahistoria = new Laskentahistoria();
             while (lukija.hasNextLine()) {
                 laskentahistoria.lisaaRivi(lukija.nextLine());
@@ -77,7 +77,7 @@ public class Tietovarasto {
     public static void tallennaKaavamuistio(String hakemistonNimi, Kaavamuistio kaavamuistio) {
         try {
             new File(hakemistonNimi).mkdir();
-            PrintWriter printWriter = new PrintWriter(hakemistonNimi+"\\listaus.txt", "UTF-8");
+            PrintWriter printWriter = new PrintWriter(hakemistonNimi+"/listaus.txt", "UTF-8");
             for (int indeksi : kaavamuistio.kaavojenIndeksit("")) {
                 Kaava kaava = kaavamuistio.haeKaava(indeksi);
                 String kaavanTunniste = indeksi+"";
@@ -90,14 +90,14 @@ public class Tietovarasto {
     
     private static void tallennaKaava(Kaava kaava, String hakemistonNimi, String kaavanTunniste) {
         try {
-            new File(hakemistonNimi+"\\"+kaavanTunniste).mkdir();
+            new File(hakemistonNimi+"/"+kaavanTunniste).mkdir();
             
-            PrintWriter printWriter = new PrintWriter(hakemistonNimi+"\\"+kaavanTunniste+"\\kaava.txt", "UTF-8");
+            PrintWriter printWriter = new PrintWriter(hakemistonNimi+"/"+kaavanTunniste+"/kaava.txt", "UTF-8");
             printWriter.println(kaava.getNimi());
             printWriter.println(kaava.getKaava());
             printWriter.close();
             
-            printWriter = new PrintWriter(hakemistonNimi+"\\"+kaavanTunniste+"\\historia.txt", "UTF-8");
+            printWriter = new PrintWriter(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt", "UTF-8");
             printWriter.print(kaava.getLaskentahistoria().kaikkiRivit());
             printWriter.close();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {}

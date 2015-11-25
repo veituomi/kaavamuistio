@@ -57,4 +57,16 @@ public class KaavaTest {
         
         assertEquals("Virhe", kaava.sijoitaParametrit(new ArrayList<String>()));
     }
+    
+    @Test
+    public void laskeToimii() {
+        Kaava k = new Kaava("Nimi", "_a_+_b_");
+        
+        ArrayList<String> parametrit = new ArrayList<>();
+        parametrit.add("23");
+        parametrit.add("74");
+        
+        assertEquals("97", k.laske(parametrit));
+        assertEquals("[23, 74]: 97\n", k.getLaskentahistoria().kaikkiRivit());
+    }
 }

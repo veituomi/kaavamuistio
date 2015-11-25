@@ -11,9 +11,15 @@ public class Laskentahistoria {
     
     public Laskentahistoria() {
         laskut = new ArrayList<>();
-        kokorajoite = 1000;
+        kokorajoite = 10;
     }
     
+    /**
+    * Konstruktori luo laskentahistorian, jonka kokorajoite poikkeaa vakiosta
+    *
+    * @param   kokorajoite
+    * 
+    */
     public Laskentahistoria(int kokorajoite) {
         laskut = new ArrayList<>();
         this.kokorajoite = kokorajoite;
@@ -50,8 +56,9 @@ public class Laskentahistoria {
     */
     public String kaikkiRivit() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (String rivi : laskut) {
-            stringBuilder.append(rivi+"\n");
+        for (int i = laskut.size()-1; i>=0; --i) {
+            String rivi = laskut.get(i);
+            stringBuilder.append(rivi).append("\n");
         }
         return stringBuilder.toString();
     }

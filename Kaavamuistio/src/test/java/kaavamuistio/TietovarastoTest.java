@@ -25,6 +25,8 @@ public class TietovarastoTest {
         
         Tietovarasto.tallennaKaavamuistio("tallennettuKaavamuistio", kaavamuistio);
         
+        kaavamuistio = Tietovarasto.avaaKaavamuistio("tallentamatonKaavamuistio");
+        
         kaavamuistio = Tietovarasto.avaaKaavamuistio("tallennettuKaavamuistio");
         
         assertEquals("Nelio",kaavamuistio.haeKaava(0).getNimi());

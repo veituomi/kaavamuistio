@@ -29,6 +29,6 @@ public class LaskentahistoriaTest {
         parametrit.add("x");
         laskentahistoria.lisaaRivi(parametrit, "tulos");
         laskentahistoria.lisaaRivi("rivi4");
-        assertEquals(laskentahistoria.kaikkiRivit(), "rivi3\n[x]: tulos\nrivi4\n");
+        assertEquals(laskentahistoria.kaikkiRivit(), "rivi4\n[x]: tulos\nrivi3\n");
     }
 }

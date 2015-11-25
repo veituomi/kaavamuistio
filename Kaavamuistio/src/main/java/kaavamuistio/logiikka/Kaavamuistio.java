@@ -63,7 +63,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi palauttaa kaavan indeksin
+    * Metodi palauttaa kaavan indeksin muistiossa
     *
     * @param   nimi Kaavan nimi
     * 
@@ -80,7 +80,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi lisää kaavan muistioon
+    * Metodi lisää kaavan muistioon, jos sen nimistä ei vielä ole
     *
     * @param   nimi Kaavan nimi
     * @param   kaava Kaava
@@ -98,6 +98,7 @@ public class Kaavamuistio {
     /**
     * Metodi lisää kaavan muistioon
     * Tätä käytetään lähinnä muistiota levyltä ladatessa
+    * Ei tarkista onko kaava jo olemassa
     *
     * @param   kaava
     */
@@ -106,7 +107,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi lisää kaavan muistioon
+    * Metodi poistaa kaavan, jos sen niminen on muistiossa
     *
     * @param   nimi Kaavan nimi
     * 
@@ -139,7 +140,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi muuttaa muistiossa olevaa kaavaa
+    * Metodi muuttaa muistiossa olevan kaavan nimeä
     *
     * @param   nimi Kaavan nykyinen nimi
     * @param   uusiNimi Kaavan uusi nimi
