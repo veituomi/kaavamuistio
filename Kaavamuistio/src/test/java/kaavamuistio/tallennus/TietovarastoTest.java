@@ -1,5 +1,6 @@
-package kaavamuistio;
+package kaavamuistio.tallennus;
 
+import kaavamuistio.tallennus.Tietovarasto;
 import kaavamuistio.logiikka.Kaavamuistio;
 import kaavamuistio.logiikka.Laskentahistoria;
 import kaavamuistio.logiikka.Kaava;

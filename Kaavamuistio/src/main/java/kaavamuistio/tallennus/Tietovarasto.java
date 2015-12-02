@@ -1,4 +1,4 @@
-package kaavamuistio;
+package kaavamuistio.tallennus;
 
 import kaavamuistio.logiikka.Kaavamuistio;
 import kaavamuistio.logiikka.Kaava;
@@ -98,7 +98,7 @@ public class Tietovarasto {
             printWriter.close();
             
             printWriter = new PrintWriter(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt", "UTF-8");
-            printWriter.print(kaava.getLaskentahistoria().kaikkiRivit());
+            printWriter.print(kaava.getLaskentahistoria().kaikkiRivit(false));
             printWriter.close();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {}
     }

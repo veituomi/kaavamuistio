@@ -43,12 +43,14 @@
                     <targetClasses>
                         <param>kaavamuistio.logiikka.*</param>
                         <param>kaavamuistio.palvelut.*</param>
-                        <param>kaavamuistio.Tietovarasto</param>
+                        <param>kaavamuistio.tallennus.*</param>
+                        <param>kaavamuistio.JuoksevaLaskuri</param>
                     </targetClasses>
                     <targetTests>
                         <param>kaavamuistio.logiikka.*</param>
                         <param>kaavamuistio.palvelut.*</param>
-                        <param>kaavamuistio.TietovarastoTest</param>
+                        <param>kaavamuistio.tallennus.*</param>
+                        <param>kaavamuistio.JuoksevaLaskuriTest</param>
                     </targetTests>
                 </configuration>
             </plugin>

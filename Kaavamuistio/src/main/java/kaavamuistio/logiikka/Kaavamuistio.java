@@ -1,6 +1,7 @@
 package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import kaavamuistio.palvelut.Laskin;
 
 /**

@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.WindowConstants;
@@ -14,7 +15,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import kaavamuistio.logiikka.Kaavamuistio;
-import kaavamuistio.Tietovarasto;
+import kaavamuistio.tallennus.Tietovarasto;
 import kaavamuistio.logiikka.Kaava;
 
 /**
@@ -25,6 +26,7 @@ public class Kayttoliittyma implements Runnable {
     private JTextField kaavanNimiTextField;
     private JTextArea kaavanSisaltoTextArea;
     private JButton kaavanLisaysButton;
+    private JButton kaavanPoistoButton;
     private JTextField hakuTextField;
     private JList kaavatList;
     
@@ -53,6 +55,14 @@ public class Kayttoliittyma implements Runnable {
         frame.setPreferredSize(new Dimension(640, 480));
 
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+        @Override
+        public void windowClosing(WindowEvent e) {
+            tallenna();
+            System.exit(0);
+        }
+    });
 
         luoKomponentit(frame.getContentPane());
 
@@ -66,57 +76,71 @@ public class Kayttoliittyma implements Runnable {
         /*
         * Tämä on myöhemmin muutettava automaattiseksi
         */
-        javax.swing.JButton tallennaButton = new javax.swing.JButton("Tallenna");
-        tallennaButton.setBounds(200, 200, 80, 25);
+        /*javax.swing.JButton tallennaButton = new javax.swing.JButton("Tallenna");
+        tallennaButton.setBounds(270, 195, 90, 25);
         tallennaButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 tallenna();
             }
         });
+        container.add(tallennaButton);
+        */
         
         kaavanNimiTextField = new JTextField();
-        kaavanNimiTextField.setBounds(50, 50, 80, 25);
+        kaavanNimiTextField.setBounds(10, 10, 150, 25);
         
         kaavanSisaltoTextArea = new JTextArea();
-        kaavanSisaltoTextArea.setBounds(250, 100, 120, 25);
+        JScrollPane kaavanSisallonRullaus = new JScrollPane(kaavanSisaltoTextArea);
+        kaavanSisallonRullaus.setBounds(10, 45, 350, 120);
         
         kaavanLisaysButton = new JButton("Lisää");
-        kaavanLisaysButton.setBounds(150, 50, 120, 25);
+        kaavanLisaysButton.setBounds(170, 10, 100, 25);
         kaavanLisaysButton.addActionListener(new KaavanLisaysActionListener());
         
+        kaavanPoistoButton = new JButton("Poista");
+        kaavanPoistoButton.setBounds(280, 10, 80, 25);
+        kaavanPoistoButton.addActionListener(new KaavanPoistoActionListener());
+        
         hakuTextField = new JTextField();
-        hakuTextField.setBounds(50, 100, 120, 25);
+        hakuTextField.setBounds(60, 195, 300, 25);
         hakuTextField.getDocument().addDocumentListener(new HakuDocumentListener());
         
+        JLabel label = new JLabel("Etsi");
+        label.setBounds(15, 195, 40, 25);
+        container.add(label);
+        
         kaavatList = new JList(kaavamuistio.kaavojenNimet("").toArray());
-        kaavatList.setBounds(100, 130, 80, 100);
         kaavatList.addListSelectionListener(new KaavanValintaSelectionListener());
+        
+        JScrollPane kaavalistanRullaus = new JScrollPane(kaavatList);
+        kaavalistanRullaus.setBounds(10, 230, 350, 200);
         
         parametrikentatPanel = new JPanel();
         parametrikentatPanel.setLayout(new GridBagLayout());
         
         JScrollPane parametrienRullaus = new JScrollPane(parametrikentatPanel);
-        parametrienRullaus.setBounds(400,10,200,190);
+        parametrienRullaus.setBounds(400,10,210,155);
         
         laskeButton = new JButton("Laske");
-        laskeButton.setBounds(400,200,100,50);
+        laskeButton.setBounds(400,195,210,25);
         laskeButton.addActionListener(new KaavanLaskuActionListener());
         
         kaavanHistoriaTextArea = new JTextArea();
-        kaavanHistoriaTextArea.setBounds(400,250,200,200);
+        
+        JScrollPane historianRullaus = new JScrollPane(kaavanHistoriaTextArea);
+        historianRullaus.setBounds(400,230,210,200);
         
         container.add(kaavanNimiTextField);
-        container.add(kaavanSisaltoTextArea);
+        container.add(kaavanSisallonRullaus);
         container.add(kaavanLisaysButton);
+        container.add(kaavanPoistoButton);
         container.add(hakuTextField);
-        container.add(kaavatList);
+        container.add(kaavalistanRullaus);
         
         container.add(parametrienRullaus);
         container.add(laskeButton);
-        container.add(kaavanHistoriaTextArea);
-        
-        container.add(tallennaButton);
+        container.add(historianRullaus);
     }
  
     private void paivitaKaavojenLista() {
@@ -131,23 +155,19 @@ public class Kayttoliittyma implements Runnable {
             Kaava kaava = kaavamuistio.haeKaava(kaavanIndeksi);
             valittuKaava = kaava;
             kaavanHistoriaTextArea.setText(kaava.getLaskentahistoria().kaikkiRivit());
+            kaavanHistoriaTextArea.setCaretPosition(0);
             muutaParametrikentat(kaava.haeMuuttujat());
         }
-    }
-    
-    private void poistaKaava(String nimi) {
-        kaavamuistio.poistaKaava(nimi);
-        paivitaKaavojenLista();
     }
     
     private void muutaParametrikentat(ArrayList<String> muuttujat) {
         parametrikentatPanel.removeAll();
         parametriTextFieldLista.clear();
         GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.HORIZONTAL; c.ipady = 20;
+        c.fill = GridBagConstraints.HORIZONTAL; c.ipady = 5;
         int i = 0;
         for (String muuttuja : muuttujat) {
-            c.gridy = i; c.gridx = 0; c.ipadx = 50;
+            c.gridy = i; c.gridx = 0; c.ipadx = 20;
             JLabel muuttujanNimi = new JLabel(muuttuja);
             parametrikentatPanel.add(muuttujanNimi, c);
             c.gridx = 1; c.ipadx = 80;
@@ -166,6 +186,7 @@ public class Kayttoliittyma implements Runnable {
         }
         valittuKaava.laske(parametrit);
         kaavanHistoriaTextArea.setText(valittuKaava.getLaskentahistoria().kaikkiRivit());
+        kaavanHistoriaTextArea.setCaretPosition(0);
     }
     
     private void tallenna() {
@@ -196,6 +217,15 @@ public class Kayttoliittyma implements Runnable {
                 kaavamuistio.muutaKaava(nimi, sisalto);
             paivitaKaavojenLista();
             valitseKaava(nimi);
+        }
+    }
+       
+    private class KaavanPoistoActionListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String nimi = kaavanNimiTextField.getText();
+            kaavamuistio.poistaKaava(nimi);
+            paivitaKaavojenLista();
         }
     }
     

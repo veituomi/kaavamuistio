@@ -101,7 +101,7 @@ public class Kaava {
     }
     
     /**
-    * Metodi laskee lausekkeen arvon
+    * Metodi laskee lausekkeen arvon ja lisää sen historiaan
     * 
     * @param parametrit lausekkeeseen syötettävät parametrit
     * 

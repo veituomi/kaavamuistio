@@ -1,6 +1,7 @@
 package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
+import kaavamuistio.*;
 
 /**
  * Luokka pitää historiaa kaavalla tehdyistä laskuista
@@ -11,7 +12,7 @@ public class Laskentahistoria {
     
     public Laskentahistoria() {
         laskut = new ArrayList<>();
-        kokorajoite = 10;
+        kokorajoite = 25;
     }
     
     /**
@@ -37,7 +38,7 @@ public class Laskentahistoria {
     }
     
     /**
-    * Metodi lisää rivin historiaan
+    * Metodi lisää rivin historiaan (käänteisessä järjestyksessä)
     *
     * @param   rivi     Lisättävä rivi
     * 
@@ -50,16 +51,32 @@ public class Laskentahistoria {
     }
     
     /**
-    * Metodi lisää rivin historiaan
+    * Metodi palauttaa koko historian yhtenä merkkijonona
     *
+    * @param kaanteinenJarjestys true jos halutaan käänteisenä
+    * 
+    * @return koko historia
+    */
+    public String kaikkiRivit(boolean kaanteinenJarjestys) {
+        if (laskut.size() < 1) {
+            return "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        JuoksevaLaskuri laskuri
+                = new JuoksevaLaskuri(0, laskut.size()-1, kaanteinenJarjestys);
+        for (int i = laskuri.seuraava(); i!=-1; i = laskuri.seuraava()) {
+            stringBuilder.append(laskut.get(i)).append("\n");
+        }
+        return stringBuilder.toString();
+    }
+    
+    /**
+    * Metodi palauttaa koko historian yhtenä merkkijonona käänteisessä
+    * järjestyksessä
+    * 
     * @return koko historia
     */
     public String kaikkiRivit() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = laskut.size()-1; i>=0; --i) {
-            String rivi = laskut.get(i);
-            stringBuilder.append(rivi).append("\n");
-        }
-        return stringBuilder.toString();
+        return kaikkiRivit(true);
     }
 }
