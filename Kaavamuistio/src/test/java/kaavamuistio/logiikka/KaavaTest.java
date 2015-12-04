@@ -60,10 +60,10 @@ public class KaavaTest {
         // Luodaan ensin laskin, jotta staattiset kentät tulevat käyttöön
         Laskin l = new Laskin();
         
-        Kaava k = new Kaava("Nimi", "23+_a_");
+        Kaava k = new Kaava("Nimi", "\"\"+parseInt(23+_a_)");
         ArrayList<String> param = new ArrayList<>();
         param.add("15");
-        assertEquals(38, (int)Double.parseDouble(k.laske(param)));
+        assertEquals("38", k.laske(param));
         assertEquals("[15]: 38\n", k.getLaskentahistoria(true));
     }
 }
