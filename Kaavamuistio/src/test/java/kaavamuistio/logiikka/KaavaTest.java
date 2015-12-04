@@ -2,6 +2,7 @@ package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
 import kaavamuistio.logiikka.Kaava;
+import kaavamuistio.palvelut.Laskin;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -54,16 +55,15 @@ public class KaavaTest {
         assertEquals("Virhe", kaava.sijoitaParametrit(new ArrayList<String>()));
     }
     
-    //@Test
-    // Ei toimi eri alustoilla samalla tavalla
+    @Test
     public void laskeToimii() {
-        Kaava k = new Kaava("Nimi", "(_a_+_b_)*2*0.5");
+        // Luodaan ensin laskin, jotta staattiset kentät tulevat käyttöön
+        Laskin l = new Laskin();
         
-        ArrayList<String> parametrit = new ArrayList<>();
-        parametrit.add("23.0");
-        parametrit.add("74.0");
-        
-        assertEquals("97.0", k.laske(parametrit));
-        assertEquals("[23.0, 74.0]: 97.0\n", k.getLaskentahistoria().kaikkiRivit());
+        Kaava k = new Kaava("Nimi", "23+_a_");
+        ArrayList<String> param = new ArrayList<>();
+        param.add("15");
+        assertEquals(38, (int)Double.parseDouble(k.laske(param)));
+        assertEquals("[15]: 38\n", k.getLaskentahistoria(true));
     }
 }

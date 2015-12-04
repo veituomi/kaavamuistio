@@ -1,22 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kaavamuistio.palvelut;
 
 import kaavamuistio.palvelut.Laskin;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author Veini
- */
 public class LaskinTest {
     
     private Laskin laskin;
@@ -27,7 +14,7 @@ public class LaskinTest {
     
     @Test
     public void laskeAntaaOikeanVastauksen() {
-        assertEquals("295810", laskin.laske("948*312+34"));
+        assertEquals(295810, (int)Double.parseDouble(laskin.laske("948*312+34.5")));
     }
     
     @Test

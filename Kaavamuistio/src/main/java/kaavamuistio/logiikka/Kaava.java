@@ -25,11 +25,15 @@ public class Kaava {
         return nimi;
     }
     
-    public Laskentahistoria getLaskentahistoria() {
-        if (laskentahistoria == null) {
-            return new Laskentahistoria();
-        }
-        return laskentahistoria;
+    /**
+     * Palauttaa laskentahistorian tekstimuodossa
+     * @param kaanteinenJarjestys true jos uusin halutaan ensin
+     * @return laskentahistoria tekstimuodossa
+     */
+    public String getLaskentahistoria(boolean kaanteinenJarjestys) {
+        if (laskentahistoria == null)
+            laskentahistoria = new Laskentahistoria();
+        return laskentahistoria.kaikkiRivit(kaanteinenJarjestys);
     }
     
     public void setLaskentahistoria(Laskentahistoria lh) {
@@ -37,9 +41,9 @@ public class Kaava {
     }
     
     /**
-    * Metodi muuttaa kaavaa
+    * Muuttaa kaavan lauseketta
     * 
-    * @param kaava Uusi kaava
+    * @param kaava uusi lauseke
     */
     public void muutaKaavaa(String kaava) {
         this.kaava = kaava;
@@ -48,16 +52,16 @@ public class Kaava {
     
     
     /**
-    * Metodi muuttaa kaavan nimen
+    * Muuttaa kaavan nimen
     * 
-    * @param nimi Uusi Nimi
+    * @param nimi uusi nimi
     */
     public void muutaNimi(String nimi) {
         this.nimi = nimi;
     }
     
     /**
-    * Metodi tarkistaa ja mahdollisesti korjaa vioittuneen kaavan.
+    * Käy läpi ja mahdollisesti korjaa vioittuneen kaavan
     */
     public void tarkistaKaavanEheys() {
         String[] osiinJaettuKaava = (" "+kaava+" ").split("_");
@@ -66,7 +70,7 @@ public class Kaava {
     }
     
     /**
-    * Metodi etsii kaavassa esiintyvät muuttujat
+    * Etsii kaavassa esiintyvät muuttujat
     *
     * @return lista muuttujista
     */
@@ -82,13 +86,11 @@ public class Kaava {
     }
     
     /**
-    * Metodi sijoittaa annetut parametrit, jos niitä on yhtä paljon
-    * kuin muuttujia
-    *
-    * @param   parametrit   Kaavaan syötetyt parametrit
-    * 
-    * @return lauseke johon on sijoitettu parametrit
-    */
+     * Sijoittaa annetut parametrit, jos niitä on yhtä paljon kuin muuttujia
+     *
+     * @param   parametrit   Kaavaan syötetyt parametrit
+     * @return lauseke johon on sijoitettu parametrit
+     */
     public String sijoitaParametrit(ArrayList<String> parametrit) {
         ArrayList<String> muuttujat = haeMuuttujat();
         if (parametrit.size() != muuttujat.size())
@@ -101,7 +103,7 @@ public class Kaava {
     }
     
     /**
-    * Metodi laskee lausekkeen arvon ja lisää sen historiaan
+    * Laskee lausekkeen arvon ja lisää sen historiaan
     * 
     * @param parametrit lausekkeeseen syötettävät parametrit
     * 

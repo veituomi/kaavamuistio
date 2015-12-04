@@ -35,6 +35,11 @@ public class KaavamuistioTest {
     }
 
     @Test
+    public void testHaeKaavaNimella() {
+        assertEquals("Potentiaalienergia: _m__c_^2", kaavamuistio.haeKaava("potentiaalienergia").toString());
+    }
+
+    @Test
     public void testKaavanIndeksi() {
         assertEquals(1, kaavamuistio.kaavanIndeksi("Potentiaalienergia"));
     }
@@ -47,7 +52,7 @@ public class KaavamuistioTest {
         assertEquals(true, a && !b);
         
         assertEquals("[0, 1, 2, 3]", kaavamuistio.kaavojenIndeksit("").toString());
-        assertEquals("a: _b_*_c_", kaavamuistio.haeKaava(3).toString());
+        assertEquals("a: jotain", kaavamuistio.haeKaava(3).toString());
     }
 
     @Test
@@ -67,6 +72,7 @@ public class KaavamuistioTest {
         boolean onnistuiko = kaavamuistio.muutaKaava("a", "_b_*_c_/2");
         assertEquals("a: _b_*_c_/2", kaavamuistio.haeKaava(3).toString());
         assertEquals(true, onnistuiko);
+        assertEquals(false, kaavamuistio.muutaKaava("ei ole olemassa", "_b_*_c_/2"));
     }
 
     @Test

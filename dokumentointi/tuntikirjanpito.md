@@ -7,3 +7,4 @@
 25.11.2015	2 h		Laajennettu käyttöliittymää, tarkennettu JavaDocia, parannettu testien kattavuutta
 27.11.2015	1,5 h		Tehty 3 sekvenssikaaviota yleisistä käyttötapauksista, luotu uusi pit-raportti
 2.12.2015	3 h		Refaktorointia, lisätty kaavan poistaminen, muutettu käyttöliittymän asettelua
+4.12.2015	3,5 h		Riippuvuuksien vähentämistä, kaaviot päivitetty

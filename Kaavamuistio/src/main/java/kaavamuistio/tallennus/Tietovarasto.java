@@ -15,7 +15,7 @@ import java.util.Scanner;
  */
 public class Tietovarasto {
     /**
-    * Metodi avaa kaavamuistion levyltä
+    * Avaa kaavamuistion levyltä
     *
     * @param   hakemistonNimi sijainti, johon muistio on tallennettu
     * 
@@ -27,7 +27,12 @@ public class Tietovarasto {
         return kaavamuistio;
     }
     
-    private static void lisaaKaavat(Kaavamuistio kaavamuistio, String hakemistonNimi) {
+    /**
+     * Lisää kaavat annettuun kaavamuistioon
+     * @param kaavamuistio
+     * @param hakemistonNimi sijainti, jossa tiedon pitäisi olla
+     */
+    public static void lisaaKaavat(Kaavamuistio kaavamuistio, String hakemistonNimi) {
         try {
             Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/listaus.txt"), "UTF-8");
             while (lukija.hasNextLine()) {
@@ -42,21 +47,36 @@ public class Tietovarasto {
         } catch (FileNotFoundException e) {}
     }
     
-    private static Kaava lueKaava(String hakemistonNimi, String kaavanTunniste) {
+    /**
+     * Yrittää lukea kaavan tiedot levyltä
+     * @param hakemistonNimi Sijainti, jossa tiedon pitäisi olla
+     * @param kaavanTunniste 
+     * @return 
+     */
+    public static Kaava lueKaava(String hakemistonNimi, String kaavanTunniste) {
         try {
             Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/"+kaavanTunniste+"/kaava.txt"), "UTF-8");
             String nimi = "", lauseke = "";
             if (lukija.hasNextLine()) {
                 nimi = lukija.nextLine();
-            } if (lukija.hasNextLine()) {
-                lauseke = lukija.nextLine();
+            }
+            while (lukija.hasNextLine()) {
+                lauseke += lukija.nextLine();
+                if (lukija.hasNextLine())
+                    lauseke += "\n";
             }
             return new Kaava(nimi, lauseke);
         } catch (FileNotFoundException e) {}
         return null;
     }
     
-    private static Laskentahistoria lueLaskentahistoria(String hakemistonNimi, String kaavanTunniste) {
+    /**
+     * Yrittää lukea laskentahistorian levyltä
+     * @param hakemistonNimi Sijainti, jossa tiedon pitäisi olla
+     * @param kaavanTunniste 
+     * @return 
+     */
+    public static Laskentahistoria lueLaskentahistoria(String hakemistonNimi, String kaavanTunniste) {
         try {
             Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt"), "UTF-8");
             Laskentahistoria laskentahistoria = new Laskentahistoria();
@@ -69,7 +89,7 @@ public class Tietovarasto {
     }
     
     /**
-    * Metodi yrittää tallentaa kaavamuistion levylle
+    * Yrittää tallentaa kaavamuistion levylle
     *
     * @param   hakemistonNimi   Levylle tallennettavan hakemiston nimi
     * @param   kaavamuistio   Levylle tallennettava kaavamuistio
@@ -98,7 +118,7 @@ public class Tietovarasto {
             printWriter.close();
             
             printWriter = new PrintWriter(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt", "UTF-8");
-            printWriter.print(kaava.getLaskentahistoria().kaikkiRivit(false));
+            printWriter.print(kaava.getLaskentahistoria(false));
             printWriter.close();
         } catch (FileNotFoundException | UnsupportedEncodingException e) {}
     }

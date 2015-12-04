@@ -16,7 +16,7 @@ public class Laskentahistoria {
     }
     
     /**
-    * Konstruktori luo laskentahistorian, jonka kokorajoite poikkeaa vakiosta
+    * Luo laskentahistorian, jonka kokorajoite poikkeaa vakiosta
     *
     * @param   kokorajoite
     * 
@@ -27,7 +27,7 @@ public class Laskentahistoria {
     }
     
     /**
-    * Metodi lisää rivin historiaan
+    * Lisää rivin historiaan
     *
     * @param   parametrit       Kaavaan käytetyt parametrit
     * @param   tulos
@@ -38,7 +38,7 @@ public class Laskentahistoria {
     }
     
     /**
-    * Metodi lisää rivin historiaan (käänteisessä järjestyksessä)
+    * Lisää rivin historiaan
     *
     * @param   rivi     Lisättävä rivi
     * 
@@ -51,7 +51,7 @@ public class Laskentahistoria {
     }
     
     /**
-    * Metodi palauttaa koko historian yhtenä merkkijonona
+    * Palauttaa koko historian yhtenä merkkijonona
     *
     * @param kaanteinenJarjestys true jos halutaan käänteisenä
     * 
@@ -69,13 +69,10 @@ public class Laskentahistoria {
         }
         return stringBuilder.toString();
     }
-    
     /**
-    * Metodi palauttaa koko historian yhtenä merkkijonona käänteisessä
-    * järjestyksessä
-    * 
-    * @return koko historia
-    */
+     * Palauttaa koko historian yhtenä merkkijonona käänteisessä järjestyksessä
+     * @return koko historia
+     */
     public String kaikkiRivit() {
         return kaikkiRivit(true);
     }

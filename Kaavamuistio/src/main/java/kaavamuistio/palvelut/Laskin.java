@@ -7,8 +7,6 @@ import javax.script.ScriptEngineManager;
  * Luokka tarjoaa menetelmän lausekkeen laskuun
  */
 public class Laskin {
-    // Lähtökohtaisesti käytetään JavaScript-moottoria laskemiseen.
-    // Mahdollisuuksien puitteissa tavoitteena on kirjoittaa oma ratkaisija.
     private static ScriptEngineManager scriptEngineManager;
     private static ScriptEngine scriptEngine;
     
@@ -18,7 +16,7 @@ public class Laskin {
     }
     
     /**
-    * Metodi yrittää laskea lausekkeelle arvon
+    * Yrittää laskea lausekkeelle arvon
     *
     * @param   lauseke   Laskimelle annettu kaava
     * 

@@ -1,7 +1,6 @@
 package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import kaavamuistio.palvelut.Laskin;
 
 /**
@@ -17,11 +16,11 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi hakee kaavat
+    * Hakee kaavojen indeksit
     *
     * @param   haku Pitää sisältyä nimeen
     * 
-    * @return Palauttaa listan indekseistä, joihin haku osuu
+    * @return listan indeksit, joihin haku osuu
     */
     public ArrayList<Integer> kaavojenIndeksit(String haku) {
         ArrayList<Integer> lista = new ArrayList<>();
@@ -35,11 +34,11 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi hakee kaavat
+    * Hakee kaavojen nimet
     *
     * @param   haku Pitää sisältyä nimeen
     * 
-    * @return Palauttaa listan indekseistä, joihin haku osuu
+    * @return Palauttaa listan nimistä, joihin haku osuu
     */
     public ArrayList<String> kaavojenNimet(String haku) {
         ArrayList<String> lista = new ArrayList<>();
@@ -51,7 +50,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi hakee kaavan
+    * Palauttaa kaavan
     *
     * @param   indeksi Kaavan indeksi muistiossa
     * 
@@ -64,7 +63,18 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi palauttaa kaavan indeksin muistiossa
+    * Palauttaa kaavan
+    *
+    * @param   nimi Kaavan nimi muistiossa
+    * 
+    * @return palauttaa nimeä vastaavan kaavan
+    */
+    public Kaava haeKaava(String nimi) {
+        return haeKaava(kaavanIndeksi(nimi));
+    }
+    
+    /**
+    * Palauttaa kaavan indeksin muistiossa
     *
     * @param   nimi Kaavan nimi
     * 
@@ -81,7 +91,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi lisää kaavan muistioon, jos sen nimistä ei vielä ole
+    * Lisää kaavan muistioon, jos sen nimistä ei vielä ole
     *
     * @param   nimi Kaavan nimi
     * @param   kaava Kaava
@@ -89,15 +99,17 @@ public class Kaavamuistio {
     * @return true/false onnistumisesta riippuen
     */
     public boolean lisaaKaava(String nimi, String kaava) {
-        if (kaavanIndeksi(nimi) == -1) {
+        int indeksi = kaavanIndeksi(nimi);
+        if (indeksi == -1) {
             kaavat.add(new Kaava(nimi, kaava));
             return true;
         }
+        kaavat.get(indeksi).muutaKaavaa(kaava);
         return false;
     }
     
     /**
-    * Metodi lisää kaavan muistioon
+    * Lisää kaavan muistioon
     * Tätä käytetään lähinnä muistiota levyltä ladatessa
     * Ei tarkista onko kaava jo olemassa
     *
@@ -108,7 +120,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi poistaa kaavan, jos sen niminen on muistiossa
+    * Poistaa kaavan, jos sen niminen on muistiossa
     *
     * @param   nimi Kaavan nimi
     * 
@@ -124,7 +136,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi muuttaa muistiossa olevaa kaavaa
+    * Muuttaa muistiossa olevaa kaavaa
     *
     * @param   nimi Kaavan nimi
     * @param   kaava Uusi kaava
@@ -141,7 +153,7 @@ public class Kaavamuistio {
     }
     
     /**
-    * Metodi muuttaa muistiossa olevan kaavan nimeä
+    * Muuttaa muistiossa olevan kaavan nimeä
     *
     * @param   nimi Kaavan nykyinen nimi
     * @param   uusiNimi Kaavan uusi nimi

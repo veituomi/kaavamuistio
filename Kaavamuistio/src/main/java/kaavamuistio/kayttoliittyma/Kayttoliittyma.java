@@ -43,7 +43,7 @@ public class Kayttoliittyma implements Runnable {
     private Kaava valittuKaava;
 
     public Kayttoliittyma() {
-        kaavamuistio = Tietovarasto.avaaKaavamuistio("kaavamuistio");
+        kaavamuistio = Tietovarasto.avaaKaavamuistio("./kaavamuistio");
     }
     
     /**
@@ -72,20 +72,6 @@ public class Kayttoliittyma implements Runnable {
 
     private void luoKomponentit(Container container) {
         container.setLayout(null);
-        
-        /*
-        * Tämä on myöhemmin muutettava automaattiseksi
-        */
-        /*javax.swing.JButton tallennaButton = new javax.swing.JButton("Tallenna");
-        tallennaButton.setBounds(270, 195, 90, 25);
-        tallennaButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                tallenna();
-            }
-        });
-        container.add(tallennaButton);
-        */
         
         kaavanNimiTextField = new JTextField();
         kaavanNimiTextField.setBounds(10, 10, 150, 25);
@@ -154,7 +140,7 @@ public class Kayttoliittyma implements Runnable {
         if (kaavanIndeksi != -1) {
             Kaava kaava = kaavamuistio.haeKaava(kaavanIndeksi);
             valittuKaava = kaava;
-            kaavanHistoriaTextArea.setText(kaava.getLaskentahistoria().kaikkiRivit());
+            kaavanHistoriaTextArea.setText(kaava.getLaskentahistoria(true));
             kaavanHistoriaTextArea.setCaretPosition(0);
             muutaParametrikentat(kaava.haeMuuttujat());
         }
@@ -185,12 +171,12 @@ public class Kayttoliittyma implements Runnable {
             parametrit.add(parametriTextField.getText());
         }
         valittuKaava.laske(parametrit);
-        kaavanHistoriaTextArea.setText(valittuKaava.getLaskentahistoria().kaikkiRivit());
+        kaavanHistoriaTextArea.setText(valittuKaava.getLaskentahistoria(true));
         kaavanHistoriaTextArea.setCaretPosition(0);
     }
     
     private void tallenna() {
-        Tietovarasto.tallennaKaavamuistio("kaavamuistio", kaavamuistio);
+        Tietovarasto.tallennaKaavamuistio("./kaavamuistio", kaavamuistio);
     }
     
     private class KaavanValintaSelectionListener implements ListSelectionListener {
@@ -200,9 +186,7 @@ public class Kayttoliittyma implements Runnable {
             if (nimi != null && kaavamuistio.kaavanIndeksi(nimi) != -1) {
                 kaavanNimiTextField.setText(nimi);
                 kaavanSisaltoTextArea.setText(
-                        kaavamuistio.haeKaava(
-                            kaavamuistio.kaavanIndeksi(nimi)
-                        ).getKaava());
+                        kaavamuistio.haeKaava(nimi).getKaava());
                 valitseKaava(nimi);
             }
         }   
@@ -213,8 +197,7 @@ public class Kayttoliittyma implements Runnable {
         public void actionPerformed(ActionEvent e) {
             String nimi = kaavanNimiTextField.getText();
             String sisalto = kaavanSisaltoTextArea.getText();
-            if (!kaavamuistio.lisaaKaava(nimi, sisalto))
-                kaavamuistio.muutaKaava(nimi, sisalto);
+            kaavamuistio.lisaaKaava(nimi, sisalto);
             paivitaKaavojenLista();
             valitseKaava(nimi);
         }

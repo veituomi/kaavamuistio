@@ -1,41 +1,52 @@
 package kaavamuistio;
 
+/**
+ * Luokka toimii laskurina, joka käy kokonaisluvut tietyltä väliltä läpi
+ */
 public class JuoksevaLaskuri {
     private int tilanne;
-    private int loppu;
+    private final int loppu;
     
-    private int valmis;
+    private final int valmis;
     private boolean onLopussa = false;
     
-    public JuoksevaLaskuri(int t, int l, boolean j) {
-        if (j) {
-            tilanne = l;
-            loppu = t;
+    /**
+     * @param aloitus
+     * @param lopetus
+     * @param jarjestys jos true, aloitus ja lopetus ovat keskenään käänteiset
+     */
+    public JuoksevaLaskuri(int aloitus, int lopetus, boolean jarjestys) {
+        if (jarjestys) {
+            tilanne = lopetus;
+            loppu = aloitus;
         } else {
-            tilanne = t;
-            loppu = l;
+            tilanne = aloitus;
+            loppu = lopetus;
         }
         valmis = -1;
     }
     
-    public JuoksevaLaskuri(int t, int l, int v) {
-        tilanne = t;
-        loppu = l;
-        valmis = v;
+    public JuoksevaLaskuri(int aloitus, int lopetus, int arvoValmiina) {
+        tilanne = aloitus;
+        loppu = lopetus;
+        valmis = arvoValmiina;
     }
     
+    /**
+     * Siirtyy askeleen eteenpäin
+     * @return ennen askelta oleva laskurin arvo
+     */
     public int seuraava() {
         if (onLopussa) {
             return valmis;
         }
-        int palautettava = tilanne;
         if (tilanne < loppu) {
-            ++tilanne;
+            return tilanne++;
         } else if (tilanne > loppu) {
-            --tilanne;
+            return tilanne--;
         } else {
             onLopussa = true;
+            return loppu;
         }
-        return palautettava;
     }
 }
