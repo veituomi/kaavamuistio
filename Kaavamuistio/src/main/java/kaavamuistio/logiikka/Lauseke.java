@@ -2,11 +2,18 @@ package kaavamuistio.logiikka;
 
 import java.util.ArrayList;
 
+/**
+ * Sisältää matemaattisen lausekkeen ja metodit sen käyttöön
+ */
 public class Lauseke {
     private String lauseke;
     
     private ArrayList<String> muuttujat;
     
+    /**
+     * Luo uuden lausekkeen
+     * @param lauseke 
+     */
     public Lauseke(String lauseke) {
         this.lauseke = lauseke;
         tarkistaEheys();
@@ -20,8 +27,12 @@ public class Lauseke {
         return muuttujat;
     }
     
-    public void muuta(String lause) {
-        lauseke = lause;
+    /**
+     * Muuttaa lausekkeen
+     * @param lauseke
+     */
+    public void muuta(String lauseke) {
+        this.lauseke = lauseke;
         tarkistaEheys();
     }
     
@@ -43,7 +54,7 @@ public class Lauseke {
     }
     
     /**
-     * Sijoittaa annetut parametrit, jos niitä on yhtä paljon kuin muuttujia
+     * Sijoittaa annetut parametrit, jos niitä on yhtä paljon kuin lausekkeessa muuttujia
      *
      * @param   parametrit   Kaavaan syötetyt parametrit
      * @return lauseke johon on sijoitettu parametrit
