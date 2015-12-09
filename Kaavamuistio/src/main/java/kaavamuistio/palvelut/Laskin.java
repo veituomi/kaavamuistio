@@ -10,6 +10,9 @@ public class Laskin {
     private static ScriptEngineManager scriptEngineManager;
     private static ScriptEngine scriptEngine;
     
+    /**
+     * Alustaa laskimen tarvitsemat resurssit
+     */
     public Laskin() {
         scriptEngineManager = new ScriptEngineManager();
         scriptEngine = scriptEngineManager.getEngineByName("JavaScript");
@@ -25,8 +28,7 @@ public class Laskin {
     public static String laske(String lauseke) {
         try {
             return scriptEngine.eval(lauseke).toString();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             return "Virhe";
         }
     }

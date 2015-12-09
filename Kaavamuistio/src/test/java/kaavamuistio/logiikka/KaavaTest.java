@@ -33,26 +33,10 @@ public class KaavaTest {
     }
     
     @Test
-    public void tarkistaKaavanEheysKorjaa() {
-        kaava.muutaKaavaa(virhekaava);
-        assertEquals(tavoitekaava,kaava.getKaava());
-    }
-    
-    @Test
     public void haeMuuttujatHakeeOikein() {
         assertEquals("[a, b]",kaava.haeMuuttujat().toString());
         kaava.muutaKaavaa(tavoitekaava);
         assertEquals("[c, a, b]",kaava.haeMuuttujat().toString());
-    }
-    
-    @Test
-    public void sijoitaParametritToimii() {
-        ArrayList<String> parametrit = new ArrayList<>();
-        parametrit.add("23");
-        parametrit.add("74");
-        assertEquals(alkukaava.replaceAll("_a_", "23").replaceAll("_b_", "74"),kaava.sijoitaParametrit(parametrit));
-        
-        assertEquals("Virhe", kaava.sijoitaParametrit(new ArrayList<String>()));
     }
     
     @Test

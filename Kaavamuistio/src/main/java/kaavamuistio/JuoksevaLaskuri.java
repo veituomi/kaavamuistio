@@ -7,10 +7,10 @@ public class JuoksevaLaskuri {
     private int tilanne;
     private final int loppu;
     
-    private final int valmis;
     private boolean onLopussa = false;
     
     /**
+     * Luo uuden laskurin, joka menee joko aloituksesta lopetukseen tai toisinpäin
      * @param aloitus
      * @param lopetus
      * @param jarjestys jos true, aloitus ja lopetus ovat keskenään käänteiset
@@ -23,20 +23,14 @@ public class JuoksevaLaskuri {
             tilanne = aloitus;
             loppu = lopetus;
         }
-        valmis = -1;
-    }
-    
-    public JuoksevaLaskuri(int aloitus, int lopetus, int arvoValmiina) {
-        tilanne = aloitus;
-        loppu = lopetus;
-        valmis = arvoValmiina;
     }
     
     /**
      * Siirtyy askeleen eteenpäin
-     * @return ennen askelta oleva laskurin arvo
+     * @param valmis valmiin laskurin arvo
+     * @return ennen askelta oleva laskurin arvo tai valmiin laskurin arvo, jos lopussa
      */
-    public int seuraava() {
+    public int seuraava(int valmis) {
         if (onLopussa) {
             return valmis;
         }
@@ -48,5 +42,13 @@ public class JuoksevaLaskuri {
             onLopussa = true;
             return loppu;
         }
+    }
+    
+    /**
+     * Siirtyy askeleen eteenpäin
+     * @return ennen askelta oleva laskurin arvo tai -1, jos lopussa
+     */
+    public int seuraava() {
+        return this.seuraava(-1);
     }
 }

@@ -25,9 +25,14 @@ public class TietovarastoTest {
         String vertailuhistoria = laskentahistoria.kaikkiRivit();
         kaavamuistio.haeKaava(2).setLaskentahistoria(laskentahistoria);
         
-        Tietovarasto.tallennaKaavamuistio("tallennettuKaavamuistio", kaavamuistio);
+        // Tällä saa mutanttien tappamisen täyteen, tosin turhaa tiedostojen kirjoittamista
+        //Random random = new Random();
+        //String satunnainenNimi = random.nextInt() + "";
+        String satunnainenNimi = "";
         
-        kaavamuistio = Tietovarasto.avaaKaavamuistio("tallennettuKaavamuistio");
+        Tietovarasto.tallennaKaavamuistio("tallennettuKaavamuistio/" + satunnainenNimi, kaavamuistio);
+        
+        kaavamuistio = Tietovarasto.avaaKaavamuistio("tallennettuKaavamuistio/" + satunnainenNimi);
         
         assertEquals("Nelio",kaavamuistio.haeKaava(0).getNimi());
         assertEquals(vertailuhistoria,kaavamuistio.haeKaava(2).getLaskentahistoria(false));

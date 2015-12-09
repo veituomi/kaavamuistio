@@ -8,11 +8,13 @@ import kaavamuistio.palvelut.Laskin;
  */
 public class Kaavamuistio {
     private ArrayList<Kaava> kaavat;
-    private Laskin laskin;
     
+    /**
+     * Luo uuden kaavamuistion, lisäksi alustaa laskimen tarvitsemat komponentit
+     */
     public Kaavamuistio() {
         kaavat = new ArrayList<>();
-        laskin = new Laskin();
+        Laskin laskin = new Laskin();
     }
     
     /**
@@ -26,7 +28,7 @@ public class Kaavamuistio {
         ArrayList<Integer> lista = new ArrayList<>();
         int i = 0;
         for (Kaava kaava : kaavat) {
-            if (kaava.getNimi().toLowerCase().contains(haku.toLowerCase()))
+            if (kaava.sisaltaakoNimi(haku))
                 lista.add(i);
             ++i;
         }
@@ -43,7 +45,7 @@ public class Kaavamuistio {
     public ArrayList<String> kaavojenNimet(String haku) {
         ArrayList<String> lista = new ArrayList<>();
         for (Kaava kaava : kaavat) {
-            if (kaava.getNimi().toLowerCase().contains(haku.toLowerCase()))
+            if (kaava.sisaltaakoNimi(haku))
                 lista.add(kaava.getNimi());
         }
         return lista;
@@ -81,11 +83,9 @@ public class Kaavamuistio {
     * @return palauttaa nimeä vastaavan kaavan indeksin
     */
     public int kaavanIndeksi(String nimi) {
-        int i = 0;
-        for (Kaava k : kaavat) {
-            if (k.getNimi().toLowerCase().equals(nimi.toLowerCase()))
+        for (int i = 0; i < kaavat.size(); ++i) {
+            if (kaavat.get(i).onkoSamaNimi(nimi))
                 return i;
-            ++i;
         }
         return -1;
     }
@@ -99,12 +99,12 @@ public class Kaavamuistio {
     * @return true/false onnistumisesta riippuen
     */
     public boolean lisaaKaava(String nimi, String kaava) {
-        int indeksi = kaavanIndeksi(nimi);
-        if (indeksi == -1) {
+        int i = kaavanIndeksi(nimi);
+        if (i == -1) {
             kaavat.add(new Kaava(nimi, kaava));
             return true;
         }
-        kaavat.get(indeksi).muutaKaavaa(kaava);
+        kaavat.get(i).muutaKaavaa(kaava);
         return false;
     }
     
@@ -136,10 +136,10 @@ public class Kaavamuistio {
     }
     
     /**
-    * Muuttaa muistiossa olevaa kaavaa
+    * Muuttaa muistiossa olevan kaavan lauseketta
     *
     * @param   nimi Kaavan nimi
-    * @param   kaava Uusi kaava
+    * @param   kaava Uusi lauseke
     * 
     * @return true jos kaava on olemassa, false jos ei sen vuoksi voi muuttaa
     */

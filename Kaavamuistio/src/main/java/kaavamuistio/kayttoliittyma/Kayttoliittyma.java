@@ -42,12 +42,15 @@ public class Kayttoliittyma implements Runnable {
     
     private Kaava valittuKaava;
 
+    /**
+     * Luo uuden käyttöliittymän ja avaa sitä varten tallennetun kaavamuistion
+     */
     public Kayttoliittyma() {
         kaavamuistio = Tietovarasto.avaaKaavamuistio("./kaavamuistio");
     }
     
     /**
-     * Metodi luo ikkunan ja sen sisältämät komponentit
+     * Luo ikkunan ja sen sisältämät komponentit
      */
     @Override
     public void run() {
@@ -57,12 +60,12 @@ public class Kayttoliittyma implements Runnable {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
-        @Override
-        public void windowClosing(WindowEvent e) {
-            tallenna();
-            System.exit(0);
-        }
-    });
+            @Override
+            public void windowClosing(WindowEvent e) {
+                tallenna();
+                System.exit(0);
+            }
+        });
 
         luoKomponentit(frame.getContentPane());
 
@@ -73,62 +76,71 @@ public class Kayttoliittyma implements Runnable {
     private void luoKomponentit(Container container) {
         container.setLayout(null);
         
+        lisaaKaavanMuokkausKomponentit(container);
+        lisaaKomponentitKaavanValintaan(container);
+        lisaaKomponentitKaavanKayttamiseen(container);
+    }
+ 
+    private void lisaaKaavanMuokkausKomponentit(Container container) {
         kaavanNimiTextField = new JTextField();
         kaavanNimiTextField.setBounds(10, 10, 150, 25);
-        
+
         kaavanSisaltoTextArea = new JTextArea();
         JScrollPane kaavanSisallonRullaus = new JScrollPane(kaavanSisaltoTextArea);
         kaavanSisallonRullaus.setBounds(10, 45, 350, 120);
-        
+
         kaavanLisaysButton = new JButton("Lisää");
         kaavanLisaysButton.setBounds(170, 10, 100, 25);
         kaavanLisaysButton.addActionListener(new KaavanLisaysActionListener());
-        
+
         kaavanPoistoButton = new JButton("Poista");
         kaavanPoistoButton.setBounds(280, 10, 80, 25);
         kaavanPoistoButton.addActionListener(new KaavanPoistoActionListener());
-        
+
         hakuTextField = new JTextField();
         hakuTextField.setBounds(60, 195, 300, 25);
         hakuTextField.getDocument().addDocumentListener(new HakuDocumentListener());
-        
-        JLabel label = new JLabel("Etsi");
-        label.setBounds(15, 195, 40, 25);
-        container.add(label);
-        
-        kaavatList = new JList(kaavamuistio.kaavojenNimet("").toArray());
-        kaavatList.addListSelectionListener(new KaavanValintaSelectionListener());
-        
-        JScrollPane kaavalistanRullaus = new JScrollPane(kaavatList);
-        kaavalistanRullaus.setBounds(10, 230, 350, 200);
-        
-        parametrikentatPanel = new JPanel();
-        parametrikentatPanel.setLayout(new GridBagLayout());
-        
-        JScrollPane parametrienRullaus = new JScrollPane(parametrikentatPanel);
-        parametrienRullaus.setBounds(400,10,210,155);
-        
-        laskeButton = new JButton("Laske");
-        laskeButton.setBounds(400,195,210,25);
-        laskeButton.addActionListener(new KaavanLaskuActionListener());
-        
-        kaavanHistoriaTextArea = new JTextArea();
-        
-        JScrollPane historianRullaus = new JScrollPane(kaavanHistoriaTextArea);
-        historianRullaus.setBounds(400,230,210,200);
-        
+
         container.add(kaavanNimiTextField);
         container.add(kaavanSisallonRullaus);
         container.add(kaavanLisaysButton);
         container.add(kaavanPoistoButton);
+    }
+    
+    private void lisaaKomponentitKaavanValintaan(Container container) {
+        JLabel label = new JLabel("Etsi");
+        label.setBounds(15, 195, 40, 25);
+        container.add(label);
+
+        kaavatList = new JList(kaavamuistio.kaavojenNimet("").toArray());
+        kaavatList.addListSelectionListener(new KaavanValintaSelectionListener());
+
+        JScrollPane kaavalistanRullaus = new JScrollPane(kaavatList);
+        kaavalistanRullaus.setBounds(10, 230, 350, 200);
         container.add(hakuTextField);
         container.add(kaavalistanRullaus);
-        
+    }
+    
+    private void lisaaKomponentitKaavanKayttamiseen(Container container) {
+        parametrikentatPanel = new JPanel();
+        parametrikentatPanel.setLayout(new GridBagLayout());
+
+        JScrollPane parametrienRullaus = new JScrollPane(parametrikentatPanel);
+        parametrienRullaus.setBounds(400, 10, 210, 155);
+
+        laskeButton = new JButton("Laske");
+        laskeButton.setBounds(400, 195, 210, 25);
+        laskeButton.addActionListener(new KaavanLaskuActionListener());
+
+        kaavanHistoriaTextArea = new JTextArea();
+        JScrollPane historianRullaus = new JScrollPane(kaavanHistoriaTextArea);
+        historianRullaus.setBounds(400, 230, 210, 200);
+
         container.add(parametrienRullaus);
         container.add(laskeButton);
         container.add(historianRullaus);
     }
- 
+    
     private void paivitaKaavojenLista() {
         String haettava = hakuTextField.getText();
         kaavatList.removeAll();
@@ -182,7 +194,7 @@ public class Kayttoliittyma implements Runnable {
     private class KaavanValintaSelectionListener implements ListSelectionListener {
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            String nimi = (String)kaavatList.getSelectedValue();
+            String nimi = (String) kaavatList.getSelectedValue();
             if (nimi != null && kaavamuistio.kaavanIndeksi(nimi) != -1) {
                 kaavanNimiTextField.setText(nimi);
                 kaavanSisaltoTextArea.setText(
@@ -234,7 +246,6 @@ public class Kayttoliittyma implements Runnable {
         }
     }
     
-
     public JFrame getFrame() {
         return frame;
     }

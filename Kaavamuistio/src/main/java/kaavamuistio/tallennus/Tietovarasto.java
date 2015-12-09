@@ -33,18 +33,19 @@ public class Tietovarasto {
      * @param hakemistonNimi sijainti, jossa tiedon pitäisi olla
      */
     public static void lisaaKaavat(Kaavamuistio kaavamuistio, String hakemistonNimi) {
-        try {
-            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/listaus.txt"), "UTF-8");
-            while (lukija.hasNextLine()) {
-                String kaavanTunniste = lukija.nextLine();
-                Kaava kaava = lueKaava(hakemistonNimi, kaavanTunniste);
-                Laskentahistoria laskentahistoria = lueLaskentahistoria(hakemistonNimi, kaavanTunniste);
-                if (kaava != null) {
-                    kaava.setLaskentahistoria(laskentahistoria);
-                    kaavamuistio.lisaaKaava(kaava);
-                }
+        Scanner lukija = luoTiedostonLukija(hakemistonNimi + "/listaus.txt");
+        if (lukija == null) {
+            return;
+        }
+        while (lukija.hasNextLine()) {
+            String kaavanTunniste = lukija.nextLine();
+            Kaava kaava = lueKaava(hakemistonNimi, kaavanTunniste);
+            Laskentahistoria laskentahistoria = lueLaskentahistoria(hakemistonNimi, kaavanTunniste);
+            if (kaava != null) {
+                kaava.setLaskentahistoria(laskentahistoria);
+                kaavamuistio.lisaaKaava(kaava);
             }
-        } catch (FileNotFoundException e) {}
+        }
     }
     
     /**
@@ -54,20 +55,16 @@ public class Tietovarasto {
      * @return 
      */
     public static Kaava lueKaava(String hakemistonNimi, String kaavanTunniste) {
-        try {
-            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/"+kaavanTunniste+"/kaava.txt"), "UTF-8");
-            String nimi = "", lauseke = "";
-            if (lukija.hasNextLine()) {
-                nimi = lukija.nextLine();
-            }
-            while (lukija.hasNextLine()) {
-                lauseke += lukija.nextLine();
-                if (lukija.hasNextLine())
-                    lauseke += "\n";
-            }
-            return new Kaava(nimi, lauseke);
-        } catch (FileNotFoundException e) {}
-        return null;
+        Scanner lukija = luoTiedostonLukija(hakemistonNimi + "/" + kaavanTunniste + "/kaava.txt");
+        if (lukija == null) {
+            return null;
+        }
+        String nimi = "";
+        if (lukija.hasNextLine()) {
+            nimi = lukija.nextLine();
+        }
+        String lauseke = lueLoputRivit(lukija);
+        return new Kaava(nimi, lauseke);
     }
     
     /**
@@ -77,15 +74,15 @@ public class Tietovarasto {
      * @return 
      */
     public static Laskentahistoria lueLaskentahistoria(String hakemistonNimi, String kaavanTunniste) {
-        try {
-            Scanner lukija = new Scanner(new FileInputStream(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt"), "UTF-8");
-            Laskentahistoria laskentahistoria = new Laskentahistoria();
-            while (lukija.hasNextLine()) {
-                laskentahistoria.lisaaRivi(lukija.nextLine());
-            }
-            return laskentahistoria;
-        } catch (FileNotFoundException e) {}
-        return null;
+        Scanner lukija = luoTiedostonLukija(hakemistonNimi + "/" + kaavanTunniste + "/historia.txt");
+        if (lukija == null) {
+            return null;
+        }
+        Laskentahistoria laskentahistoria = new Laskentahistoria();
+        while (lukija.hasNextLine()) {
+            laskentahistoria.lisaaRivi(lukija.nextLine());
+        }
+        return laskentahistoria;
     }
     
     /**
@@ -97,29 +94,48 @@ public class Tietovarasto {
     public static void tallennaKaavamuistio(String hakemistonNimi, Kaavamuistio kaavamuistio) {
         try {
             new File(hakemistonNimi).mkdir();
-            PrintWriter printWriter = new PrintWriter(hakemistonNimi+"/listaus.txt", "UTF-8");
+            PrintWriter printWriter = new PrintWriter(hakemistonNimi + "/listaus.txt", "UTF-8");
             for (int indeksi : kaavamuistio.kaavojenIndeksit("")) {
                 Kaava kaava = kaavamuistio.haeKaava(indeksi);
-                String kaavanTunniste = indeksi+"";
+                String kaavanTunniste = indeksi + "";
                 printWriter.println(kaavanTunniste);
                 tallennaKaava(kaava, hakemistonNimi, kaavanTunniste);
             }
             printWriter.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {}
+        } catch (FileNotFoundException | UnsupportedEncodingException e) { }
     }
     
     private static void tallennaKaava(Kaava kaava, String hakemistonNimi, String kaavanTunniste) {
         try {
-            new File(hakemistonNimi+"/"+kaavanTunniste).mkdir();
+            new File(hakemistonNimi + "/" + kaavanTunniste).mkdir();
             
-            PrintWriter printWriter = new PrintWriter(hakemistonNimi+"/"+kaavanTunniste+"/kaava.txt", "UTF-8");
-            printWriter.println(kaava.getNimi());
-            printWriter.println(kaava.getKaava());
+            PrintWriter printWriter = new PrintWriter(hakemistonNimi + "/"
+                + kaavanTunniste + "/kaava.txt", "UTF-8");
+            printWriter.println(kaava.getNimi() + "\n" + kaava.getKaava());
             printWriter.close();
             
-            printWriter = new PrintWriter(hakemistonNimi+"/"+kaavanTunniste+"/historia.txt", "UTF-8");
+            printWriter = new PrintWriter(hakemistonNimi + "/" + kaavanTunniste + "/historia.txt", "UTF-8");
             printWriter.print(kaava.getLaskentahistoria(false));
             printWriter.close();
-        } catch (FileNotFoundException | UnsupportedEncodingException e) {}
+        } catch (FileNotFoundException | UnsupportedEncodingException e) { }
+    }
+    
+    private static Scanner luoTiedostonLukija(String polku) {
+        try {
+            return new Scanner(new FileInputStream(polku), "UTF-8");
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+    }
+    
+    private static String lueLoputRivit(Scanner lukija) {
+        String loput = "";
+        while (lukija.hasNextLine()) {
+            loput += lukija.nextLine();
+            if (lukija.hasNextLine()) {
+                loput += "\n";
+            }
+        }
+        return loput;
     }
 }

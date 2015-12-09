@@ -10,6 +10,9 @@ public class Laskentahistoria {
     private ArrayList<String> laskut;
     private int kokorajoite;
     
+    /**
+     * Alustaa uuden laskentahistorian, jossa on enintään 25 riviä
+     */
     public Laskentahistoria() {
         laskut = new ArrayList<>();
         kokorajoite = 25;
@@ -34,7 +37,7 @@ public class Laskentahistoria {
     * 
     */
     public void lisaaRivi(ArrayList<String> parametrit, String tulos) {
-        lisaaRivi(parametrit.toString()+": "+tulos);
+        lisaaRivi(parametrit.toString() + ": " + tulos);
     }
     
     /**
@@ -63,8 +66,8 @@ public class Laskentahistoria {
         }
         StringBuilder stringBuilder = new StringBuilder();
         JuoksevaLaskuri laskuri
-                = new JuoksevaLaskuri(0, laskut.size()-1, kaanteinenJarjestys);
-        for (int i = laskuri.seuraava(); i!=-1; i = laskuri.seuraava()) {
+            = new JuoksevaLaskuri(0, laskut.size() - 1, kaanteinenJarjestys);
+        for (int i = laskuri.seuraava(); i != -1; i = laskuri.seuraava()) {
             stringBuilder.append(laskut.get(i)).append("\n");
         }
         return stringBuilder.toString();

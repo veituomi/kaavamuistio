@@ -10,22 +10,22 @@ public class JuoksevaLaskuriTest {
     
     @Test
     public void testSeuraavaKasvaaJaPysahtyy() {
-        JuoksevaLaskuri laskuri = new JuoksevaLaskuri(0, 3, -2);
+        JuoksevaLaskuri laskuri = new JuoksevaLaskuri(0, 3, false);
         assertEquals(0, laskuri.seuraava());
         assertEquals(1, laskuri.seuraava());
         assertEquals(2, laskuri.seuraava());
-        assertEquals(3, laskuri.seuraava());
-        assertEquals(-2, laskuri.seuraava());
+        assertEquals(3, laskuri.seuraava(-2));
+        assertEquals(-2, laskuri.seuraava(-2));
     }
     
     @Test
     public void testSeuraavaPieneneeJaPysahtyy() {
-        JuoksevaLaskuri laskuri = new JuoksevaLaskuri(3, 0, -2);
+        JuoksevaLaskuri laskuri = new JuoksevaLaskuri(3, 0, false);
         assertEquals(3, laskuri.seuraava());
         assertEquals(2, laskuri.seuraava());
         assertEquals(1, laskuri.seuraava());
-        assertEquals(0, laskuri.seuraava());
-        assertEquals(-2, laskuri.seuraava());
+        assertEquals(0, laskuri.seuraava(-2));
+        assertEquals(-2, laskuri.seuraava(-2));
     }
     
     @Test

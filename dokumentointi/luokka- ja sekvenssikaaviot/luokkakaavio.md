@@ -6,3 +6,4 @@
 [Tietovarasto]-.->[Kaava]
 [Tietovarasto]-.->[Kaavamuistio]
 [Kaava]1-1>[Laskentahistoria]
+[Kaava]++-1[Lauseke]
